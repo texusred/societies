@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anglia Student Societies Sitemap</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f7;
+        }
+        
+        h1 {
+            color: #0055b3;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .sitemap-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .tree-node {
+            margin-left: 0;
+        }
+        
+        .tree-content {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+        
+        .tree-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            margin-right: 5px;
+            color: #555;
+            transition: transform 0.2s;
+        }
+        
+        .tree-label {
+            text-decoration: none;
+            font-size: 15px;
+        }
+        
+        .tree-label:hover {
+            text-decoration: underline;
+        }
+        
+        .tree-children {
+            margin-left: 25px;
+            border-left: 1px solid #ddd;
+            padding-left: 12px;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .tree-children.expanded {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .level-0 > .tree-content > .tree-label {
+            font-weight: bold;
+            font-size: 20px;
+            color: #0055b3;
+        }
+        
+        .level-1 > .tree-content > .tree-label {
+            font-weight: 600;
+            font-size: 17px;
+            color: #0066cc;
+        }
+        
+        .level-2 > .tree-content > .tree-label {
+            font-weight: 500;
+            color: #0077e6;
+        }
+        
+        .level-3 > .tree-content > .tree-label {
+            color: #0088ff;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .expanded-icon {
+            transform: rotate(90deg);
+        }
+
+        .info-box {
+            background-color: #e8f4ff;
+            border-left: 4px solid #0066cc;
+            padding: 10px 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .expand-all-btn, .collapse-all-btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .expand-all-btn:hover, .collapse-all-btn:hover {
+            background-color: #0055aa;
+        }
+
+        .controls {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anglia Student Societies Sitemap</h1>
+    
+    <div class="sitemap-container">
+        <div class="controls">
+            <button class="expand-all-btn">Expand All</button>
+            <button class="collapse-all-btn">Collapse All</button>
+        </div>
+        
+        <div class="tree-node level-0" data-expanded="false">
+            <div class="tree-content">
+                <span class="tree-icon">▶</span>
+                <a href="https://www.angliastudent.com/societies/" class="tree-label">/societies/</a>
+            </div>
+            <div class="tree-children">
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/book/" class="tree-label">book/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1" data-expanded="false">
+                    <div class="tree-content">
+                        <span class="tree-icon">▶</span>
+                        <a href="https://www.angliastudent.com/societies/committeehub/" class="tree-label">committeehub/</a>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/calendar/" class="tree-label">calendar/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/committee/" class="tree-label">committee/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2" data-expanded="false">
+                            <div class="tree-content">
+                                <span class="tree-icon">▶</span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/event/" class="tree-label">event/</a>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/event/accident/" class="tree-label">accident/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/event/eventbookback/" class="tree-label">eventbookback/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/event/guestspeaker/" class="tree-label">guestspeaker/</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2" data-expanded="false">
+                            <div class="tree-content">
+                                <span class="tree-icon">▶</span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/finance/" class="tree-label">finance/</a>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/finance/expenses/" class="tree-label">expenses/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/finance/fundraising/" class="tree-label">fundraising/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/finance/grants/" class="tree-label">grants/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/finance/grantsallocations/" class="tree-label">grantsallocations/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/finance/greenfund/" class="tree-label">greenfund/</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/forum/" class="tree-label">forum/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/freshersfair/" class="tree-label">freshersfair/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/memberships/" class="tree-label">memberships/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2" data-expanded="false">
+                            <div class="tree-content">
+                                <span class="tree-icon">▶</span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/recognition/" class="tree-label">recognition/</a>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/recognition/activitylog/" class="tree-label">activitylog/</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2" data-expanded="false">
+                            <div class="tree-content">
+                                <span class="tree-icon">▶</span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/support/" class="tree-label">support/</a>
+                            </div>
+                            <div class="tree-children">
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/support/contactus/" class="tree-label">contactus/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/support/cs-support/" class="tree-label">cs-support/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/support/faqs/" class="tree-label">faqs/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/support/firstaid/" class="tree-label">firstaid/</a>
+                                    </div>
+                                </div>
+                                <div class="tree-node level-3">
+                                    <div class="tree-content">
+                                        <span class="tree-icon"></span>
+                                        <a href="https://www.angliastudent.com/societies/committeehub/support/safeguarder/" class="tree-label">safeguarder/</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/committeehub/training/" class="tree-label">training/</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/competition/" class="tree-label">competition/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/elections/" class="tree-label">elections/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/faq/" class="tree-label">faq/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/gigs/" class="tree-label">gigs/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1" data-expanded="false">
+                    <div class="tree-content">
+                        <span class="tree-icon">▶</span>
+                        <a href="https://www.angliastudent.com/societies/ideas/" class="tree-label">ideas/</a>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/ideas/adoptsociety/" class="tree-label">adoptsociety/</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/join/" class="tree-label">join/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/reactivatesocs/" class="tree-label">reactivatesocs/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/redesign/" class="tree-label">redesign/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1" data-expanded="false">
+                    <div class="tree-content">
+                        <span class="tree-icon">▶</span>
+                        <a href="https://www.angliastudent.com/societies/spotlight/" class="tree-label">spotlight/</a>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/spotlight/olamparkrs-bigpitchchampion/" class="tree-label">olamparkrs-bigpitchchampion/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/spotlight/cheerleadingchelmsford/" class="tree-label">cheerleadingchelmsford/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/spotlight/disabledstudentssocymposium/" class="tree-label">disabledstudentssocymposium/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/spotlight/firstaimathssoc/" class="tree-label">firstaimathssoc/</a>
+                            </div>
+                        </div>
+                        <div class="tree-node level-2">
+                            <div class="tree-content">
+                                <span class="tree-icon"></span>
+                                <a href="https://www.angliastudent.com/societies/spotlight/spotlightform/" class="tree-label">spotlightform/</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/startyourown/" class="tree-label">startyourown/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/stats/" class="tree-label">stats/</a>
+                    </div>
+                </div>
+                
+                <div class="tree-node level-1">
+                    <div class="tree-content">
+                        <span class="tree-icon"></span>
+                        <a href="https://www.angliastudent.com/societies/updates/" class="tree-label">updates/</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-box">
+        Click on folders with ▶ to expand/collapse sections. All links point to the actual pages on angliastudent.com.
+    </div>
+    
+    <div class="footer">
+        Anglia Student Societies Sitemap - Generated on May 8, 2025
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the tree based on data-expanded attributes
+            const treeNodes = document.querySelectorAll('.tree-node[data-expanded]');
+            
+            treeNodes.forEach(function(node) {
+                const isExpanded = node.getAttribute('data-expanded') === 'true';
+                const treeChildren = node.querySelector('.tree-children');
+                const treeIcon = node.querySelector('.tree-icon');
+                
+                if (isExpanded) {
+                    treeChildren.classList.add('expanded');
+                    treeIcon.classList.add('expanded-icon');
+                } else {
+                    treeChildren.classList.remove('expanded');
+                    treeIcon.classList.remove('expanded-icon');
+                }
+            });
+            
+            // Add click handlers
+            const treeContents = document.querySelectorAll('.tree-content');
+            
+            treeContents.forEach(function(content) {
+                content.addEventListener('click', function(e) {
+                    // Don't collapse when clicking on links directly
+                    if (e.target.classList.contains('tree-label')) {
+                        return;
+                    }
+                    
+                    const node = content.parentElement;
+                    const treeChildren = node.querySelector('.tree-children');
+                    const treeIcon = node.querySelector('.tree-icon');
+                    
+                    // Only toggle if this node has children
+                    if (treeChildren) {
+                        treeChildren.classList.toggle('expanded');
+                        treeIcon.classList.toggle('expanded-icon');
+                    }
+                });
+            });
+            
+            // Expand all button
+            document.querySelector('.expand-all-btn').addEventListener('click', function() {
+                const allTreeChildren = document.querySelectorAll('.tree-children');
+                const allTreeIcons = document.querySelectorAll('.tree-icon');
+                
+                allTreeChildren.forEach(function(child) {
+                    child.classList.add('expanded');
+                });
+                
+                allTreeIcons.forEach(function(icon) {
+                    icon.classList.add('expanded-icon');
+                });
+            });
+            
+            // Collapse all button
+            document.querySelector('.collapse-all-btn').addEventListener('click', function() {
+                const allTreeChildren = document.querySelectorAll('.tree-children');
+                const allTreeIcons = document.querySelectorAll('.tree-icon');
+                
+                allTreeChildren.forEach(function(child) {
+                    child.classList.remove('expanded');
+                });
+                
+                allTreeIcons.forEach(function(icon) {
+                    icon.classList.remove('expanded-icon');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
