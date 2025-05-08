@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Societies Sitemap</title>
+    <title>Anglia Student Societies Sitemap</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,10 +38,10 @@
             display: flex;
             align-items: center;
             padding: 6px 0;
-            cursor: pointer;
         }
         
         .tree-icon {
+            cursor: pointer;
             display: inline-block;
             width: 20px;
             height: 20px;
@@ -53,6 +54,7 @@
         .tree-label {
             text-decoration: none;
             font-size: 15px;
+            flex-grow: 1;
         }
         
         .tree-label:hover {
@@ -109,12 +111,27 @@
             background-color: #e8f4ff;
             border-left: 4px solid #0066cc;
             padding: 10px 15px;
-            margin-top: 20px;
+            margin: 20px 0;
             border-radius: 4px;
             font-size: 14px;
         }
 
-        .expand-all-btn, .collapse-all-btn {
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tree-controls {
+            margin-bottom: 10px;
+        }
+
+        .checkbox-controls {
+            margin-bottom: 10px;
+        }
+
+        button {
             background-color: #0066cc;
             color: white;
             border: none;
@@ -126,13 +143,51 @@
             transition: background-color 0.2s;
         }
 
-        .expand-all-btn:hover, .collapse-all-btn:hover {
+        button:hover {
             background-color: #0055aa;
         }
-
-        .controls {
-            margin-bottom: 15px;
-            text-align: right;
+        
+        .export-btn {
+            background-color: #2c974b;
+        }
+        
+        .export-btn:hover {
+            background-color: #228b22;
+        }
+        
+        .page-checkbox {
+            margin-right: 8px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .selected-count {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .is-content-page {
+            background-color: #f9f9f9;
+        }
+        
+        .directory-page {
+            background-color: transparent;
+        }
+        
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .tree-controls, .checkbox-controls {
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -141,304 +196,359 @@
     
     <div class="sitemap-container">
         <div class="controls">
-            <button class="expand-all-btn">Expand All</button>
-            <button class="collapse-all-btn">Collapse All</button>
+            <div class="tree-controls">
+                <button class="expand-all-btn">Expand All</button>
+                <button class="collapse-all-btn">Collapse All</button>
+            </div>
+            <div class="checkbox-controls">
+                <button class="check-all-btn">Check All Pages</button>
+                <button class="uncheck-all-btn">Uncheck All</button>
+                <button class="export-btn">Export Selected <span class="selected-count">0</span></button>
+            </div>
         </div>
         
-        <div class="tree-node level-0" data-expanded="false">
+        <div class="info-box">
+            Use checkboxes to select individual pages (not directories), then click "Export Selected" to generate a PDF list of your selected pages.
+        </div>
+        
+        <div class="tree-node level-0" data-expanded="false" data-path="/societies/" data-is-directory="true">
             <div class="tree-content">
                 <span class="tree-icon">▶</span>
                 <a href="https://www.angliastudent.com/societies/" class="tree-label">/societies/</a>
             </div>
             <div class="tree-children">
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/book/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/book/">
                         <a href="https://www.angliastudent.com/societies/book/" class="tree-label">book/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1" data-expanded="false">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-expanded="false" data-path="/societies/committeehub/" data-is-directory="true">
+                    <div class="tree-content directory-page">
                         <span class="tree-icon">▶</span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/">
                         <a href="https://www.angliastudent.com/societies/committeehub/" class="tree-label">committeehub/</a>
                     </div>
                     <div class="tree-children">
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/calendar/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/calendar/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/calendar/" class="tree-label">calendar/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/committee/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/committee/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/committee/" class="tree-label">committee/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2" data-expanded="false">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-expanded="false" data-path="/societies/committeehub/event/" data-is-directory="true">
+                            <div class="tree-content directory-page">
                                 <span class="tree-icon">▶</span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/event/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/event/" class="tree-label">event/</a>
                             </div>
                             <div class="tree-children">
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/event/accident/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/event/accident/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/event/accident/" class="tree-label">accident/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/event/eventbookback/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/event/eventbookback/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/event/eventbookback/" class="tree-label">eventbookback/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/event/guestspeaker/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/event/guestspeaker/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/event/guestspeaker/" class="tree-label">guestspeaker/</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tree-node level-2" data-expanded="false">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-expanded="false" data-path="/societies/committeehub/finance/" data-is-directory="true">
+                            <div class="tree-content directory-page">
                                 <span class="tree-icon">▶</span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/finance/" class="tree-label">finance/</a>
                             </div>
                             <div class="tree-children">
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/finance/expenses/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/expenses/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/finance/expenses/" class="tree-label">expenses/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/finance/fundraising/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/fundraising/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/finance/fundraising/" class="tree-label">fundraising/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/finance/grants/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/grants/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/finance/grants/" class="tree-label">grants/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/finance/grantsallocations/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/grantsallocations/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/finance/grantsallocations/" class="tree-label">grantsallocations/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/finance/greenfund/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/finance/greenfund/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/finance/greenfund/" class="tree-label">greenfund/</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/forum/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/forum/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/forum/" class="tree-label">forum/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/freshersfair/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/freshersfair/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/freshersfair/" class="tree-label">freshersfair/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/memberships/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/memberships/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/memberships/" class="tree-label">memberships/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2" data-expanded="false">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-expanded="false" data-path="/societies/committeehub/recognition/" data-is-directory="true">
+                            <div class="tree-content directory-page">
                                 <span class="tree-icon">▶</span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/recognition/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/recognition/" class="tree-label">recognition/</a>
                             </div>
                             <div class="tree-children">
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/recognition/activitylog/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/recognition/activitylog/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/recognition/activitylog/" class="tree-label">activitylog/</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tree-node level-2" data-expanded="false">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-expanded="false" data-path="/societies/committeehub/support/" data-is-directory="true">
+                            <div class="tree-content directory-page">
                                 <span class="tree-icon">▶</span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/support/" class="tree-label">support/</a>
                             </div>
                             <div class="tree-children">
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/support/contactus/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/contactus/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/support/contactus/" class="tree-label">contactus/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/support/cs-support/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/cs-support/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/support/cs-support/" class="tree-label">cs-support/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/support/faqs/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/faqs/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/support/faqs/" class="tree-label">faqs/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/support/firstaid/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/firstaid/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/support/firstaid/" class="tree-label">firstaid/</a>
                                     </div>
                                 </div>
-                                <div class="tree-node level-3">
-                                    <div class="tree-content">
+                                <div class="tree-node level-3" data-path="/societies/committeehub/support/safeguarder/" data-is-content="true">
+                                    <div class="tree-content is-content-page">
                                         <span class="tree-icon"></span>
+                                        <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/support/safeguarder/">
                                         <a href="https://www.angliastudent.com/societies/committeehub/support/safeguarder/" class="tree-label">safeguarder/</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/committeehub/training/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/committeehub/training/">
                                 <a href="https://www.angliastudent.com/societies/committeehub/training/" class="tree-label">training/</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/competition/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/competition/">
                         <a href="https://www.angliastudent.com/societies/competition/" class="tree-label">competition/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/elections/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/elections/">
                         <a href="https://www.angliastudent.com/societies/elections/" class="tree-label">elections/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/faq/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/faq/">
                         <a href="https://www.angliastudent.com/societies/faq/" class="tree-label">faq/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/gigs/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/gigs/">
                         <a href="https://www.angliastudent.com/societies/gigs/" class="tree-label">gigs/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1" data-expanded="false">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-expanded="false" data-path="/societies/ideas/" data-is-directory="true">
+                    <div class="tree-content directory-page">
                         <span class="tree-icon">▶</span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/ideas/">
                         <a href="https://www.angliastudent.com/societies/ideas/" class="tree-label">ideas/</a>
                     </div>
                     <div class="tree-children">
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/ideas/adoptsociety/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/ideas/adoptsociety/">
                                 <a href="https://www.angliastudent.com/societies/ideas/adoptsociety/" class="tree-label">adoptsociety/</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/join/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/join/">
                         <a href="https://www.angliastudent.com/societies/join/" class="tree-label">join/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/reactivatesocs/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/reactivatesocs/">
                         <a href="https://www.angliastudent.com/societies/reactivatesocs/" class="tree-label">reactivatesocs/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/redesign/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/redesign/">
                         <a href="https://www.angliastudent.com/societies/redesign/" class="tree-label">redesign/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1" data-expanded="false">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-expanded="false" data-path="/societies/spotlight/" data-is-directory="true">
+                    <div class="tree-content directory-page">
                         <span class="tree-icon">▶</span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/">
                         <a href="https://www.angliastudent.com/societies/spotlight/" class="tree-label">spotlight/</a>
                     </div>
                     <div class="tree-children">
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/spotlight/olamparkrs-bigpitchchampion/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/olamparkrs-bigpitchchampion/">
                                 <a href="https://www.angliastudent.com/societies/spotlight/olamparkrs-bigpitchchampion/" class="tree-label">olamparkrs-bigpitchchampion/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/spotlight/cheerleadingchelmsford/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/cheerleadingchelmsford/">
                                 <a href="https://www.angliastudent.com/societies/spotlight/cheerleadingchelmsford/" class="tree-label">cheerleadingchelmsford/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/spotlight/disabledstudentssocymposium/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/disabledstudentssocymposium/">
                                 <a href="https://www.angliastudent.com/societies/spotlight/disabledstudentssocymposium/" class="tree-label">disabledstudentssocymposium/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/spotlight/firstaimathssoc/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/firstaimathssoc/">
                                 <a href="https://www.angliastudent.com/societies/spotlight/firstaimathssoc/" class="tree-label">firstaimathssoc/</a>
                             </div>
                         </div>
-                        <div class="tree-node level-2">
-                            <div class="tree-content">
+                        <div class="tree-node level-2" data-path="/societies/spotlight/spotlightform/" data-is-content="true">
+                            <div class="tree-content is-content-page">
                                 <span class="tree-icon"></span>
+                                <input type="checkbox" class="page-checkbox" data-path="/societies/spotlight/spotlightform/">
                                 <a href="https://www.angliastudent.com/societies/spotlight/spotlightform/" class="tree-label">spotlightform/</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/startyourown/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/startyourown/">
                         <a href="https://www.angliastudent.com/societies/startyourown/" class="tree-label">startyourown/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/stats/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/stats/">
                         <a href="https://www.angliastudent.com/societies/stats/" class="tree-label">stats/</a>
                     </div>
                 </div>
                 
-                <div class="tree-node level-1">
-                    <div class="tree-content">
+                <div class="tree-node level-1" data-path="/societies/updates/" data-is-content="true">
+                    <div class="tree-content is-content-page">
                         <span class="tree-icon"></span>
+                        <input type="checkbox" class="page-checkbox" data-path="/societies/updates/">
                         <a href="https://www.angliastudent.com/societies/updates/" class="tree-label">updates/</a>
                     </div>
                 </div>
@@ -447,7 +557,7 @@
     </div>
     
     <div class="info-box">
-        Click on folders with ▶ to expand/collapse sections. All links point to the actual pages on angliastudent.com.
+        Click on folders with ▶ to expand/collapse sections. Check the boxes next to any page to include it in your export.
     </div>
     
     <div class="footer">
@@ -456,6 +566,14 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Make sure jsPDF is loaded
+            if (typeof window.jspdf === 'undefined') {
+                console.error('jsPDF not loaded. Make sure you have internet connection.');
+                alert('PDF export library not loaded. Please check your internet connection and refresh the page.');
+            }
+            
+            const { jsPDF } = window.jspdf;
+            
             // Initialize the tree based on data-expanded attributes
             const treeNodes = document.querySelectorAll('.tree-node[data-expanded]');
             
@@ -473,26 +591,21 @@
                 }
             });
             
-            // Add click handlers
-            const treeContents = document.querySelectorAll('.tree-content');
+            // Add click handlers for tree expansion
+            const treeIcons = document.querySelectorAll('.tree-icon');
             
-            treeContents.forEach(function(content) {
-                content.addEventListener('click', function(e) {
-                    // Don't collapse when clicking on links directly
-                    if (e.target.classList.contains('tree-label')) {
-                        return;
-                    }
-                    
-                    const node = content.parentElement;
-                    const treeChildren = node.querySelector('.tree-children');
-                    const treeIcon = node.querySelector('.tree-icon');
-                    
-                    // Only toggle if this node has children
-                    if (treeChildren) {
-                        treeChildren.classList.toggle('expanded');
-                        treeIcon.classList.toggle('expanded-icon');
-                    }
-                });
+            treeIcons.forEach(function(icon) {
+                if (icon.textContent) { // Only add click handler to icons with text (▶)
+                    icon.addEventListener('click', function() {
+                        const treeNode = icon.closest('.tree-node');
+                        const treeChildren = treeNode.querySelector('.tree-children');
+                        
+                        if (treeChildren) {
+                            treeChildren.classList.toggle('expanded');
+                            icon.classList.toggle('expanded-icon');
+                        }
+                    });
+                }
             });
             
             // Expand all button
@@ -505,7 +618,9 @@
                 });
                 
                 allTreeIcons.forEach(function(icon) {
-                    icon.classList.add('expanded-icon');
+                    if (icon.textContent) { // Only apply to icons that have content (▶)
+                        icon.classList.add('expanded-icon');
+                    }
                 });
             });
             
@@ -522,6 +637,194 @@
                     icon.classList.remove('expanded-icon');
                 });
             });
+            
+            // Checkbox functionality
+            const checkboxes = document.querySelectorAll('.page-checkbox');
+            const selectedCountDisplay = document.querySelector('.selected-count');
+            
+            // Update selected count
+            function updateSelectedCount() {
+                const checkedBoxes = document.querySelectorAll('.page-checkbox:checked');
+                selectedCountDisplay.textContent = checkedBoxes.length;
+            }
+            
+            // Add change event to all checkboxes
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', updateSelectedCount);
+            });
+            
+            // Check all button
+            document.querySelector('.check-all-btn').addEventListener('click', function() {
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.checked = true;
+                });
+                updateSelectedCount();
+            });
+            
+            // Uncheck all button
+            document.querySelector('.uncheck-all-btn').addEventListener('click', function() {
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.checked = false;
+                });
+                updateSelectedCount();
+            });
+            
+            // Export to PDF with organized sections
+            document.querySelector('.export-btn').addEventListener('click', function() {
+                const checkedBoxes = document.querySelectorAll('.page-checkbox:checked');
+                
+                if (checkedBoxes.length === 0) {
+                    alert('Please select at least one page to export.');
+                    return;
+                }
+                
+                try {
+                    // Create new PDF document
+                    const pdf = new jsPDF();
+                    
+                    // Add title
+                    pdf.setFontSize(18);
+                    pdf.text('Anglia Student Societies Sitemap', 15, 15);
+                    
+                    // Add subtitle
+                    pdf.setFontSize(14);
+                    const today = new Date().toLocaleDateString();
+                    pdf.text('Selected Pages - Generated ' + today, 15, 22);
+                    
+                    // Draw a divider line
+                    pdf.setLineWidth(0.5);
+                    pdf.line(15, 25, 195, 25);
+                    
+                    // Organize pages by parent sections
+                    const sections = {};
+                    let currentSection = "GENERAL PAGES";
+                    
+                    // First, organize all selected pages by their parent section
+                    checkedBoxes.forEach(function(checkbox) {
+                        const path = checkbox.getAttribute('data-path');
+                        const pathParts = path.split('/').filter(Boolean); // Remove empty strings
+                        
+                        // Skip the "societies" part since it's common to all
+                        pathParts.shift(); // Remove 'societies'
+                        
+                        let section = "GENERAL PAGES";
+                        let pageName = pathParts[pathParts.length - 1];
+                        
+                        // Determine the section based on path structure
+                        if (pathParts.length > 1) {
+                            if (pathParts[0] === 'committeehub') {
+                                if (pathParts.length > 2) {
+                                    // This is a subsection like "event" or "finance"
+                                    section = "COMMITTEEHUB - " + pathParts[1].toUpperCase();
+                                } else {
+                                    section = "COMMITTEEHUB MAIN";
+                                }
+                            } else {
+                                // Any other section (like spotlight, ideas, etc.)
+                                section = pathParts[0].toUpperCase();
+                            }
+                        }
+                        
+                        // Create the section if it doesn't exist
+                        if (!sections[section]) {
+                            sections[section] = [];
+                        }
+                        
+                        // Add the page to its section
+                        sections[section].push({
+                            path: path,
+                            url: 'https://www.angliastudent.com' + path,
+                            name: formatPageName(pageName)
+                        });
+                    });
+                    
+                    // Helper function to make page names more readable
+                    function formatPageName(name) {
+                        // Convert camelCase or dash-case to spaces
+                        name = name.replace(/([A-Z])/g, ' $1')
+                                   .replace(/-/g, ' ')
+                                   .replace(/\s+/g, ' '); // Replace multiple spaces with one
+                        
+                        // Capitalize the first letter of each word
+                        return name.split(' ').map(word => 
+                            word.charAt(0).toUpperCase() + word.slice(1)
+                        ).join(' ');
+                    }
+                    
+                    // Now, add each section to the PDF
+                    let yPos = 35;
+                    let isFirstSection = true;
+                    
+                    for (const section in sections) {
+                        // Add some space between sections (except the first one)
+                        if (!isFirstSection) {
+                            yPos += 10;
+                            
+                            // Check if we need a new page
+                            if (yPos > 270) {
+                                pdf.addPage();
+                                yPos = 20;
+                            }
+                        } else {
+                            isFirstSection = false;
+                        }
+                        
+                        // Add section header
+                        pdf.setFontSize(14);
+                        pdf.setFont(undefined, 'bold');
+                        pdf.text(section, 15, yPos);
+                        yPos += 5;
+                        
+                        // Add section underline
+                        pdf.setDrawColor(100, 100, 100);
+                        pdf.line(15, yPos, Math.min(15 + pdf.getTextWidth(section) * 1.1, 195), yPos);
+                        yPos += 7;
+                        
+                        // Reset font
+                        pdf.setFont(undefined, 'normal');
+                        
+                        // Add each page in this section
+                        sections[section].forEach(function(page, index) {
+                            // Check if we need a new page
+                            if (yPos > 270) {
+                                pdf.addPage();
+                                yPos = 20;
+                            }
+                            
+                            // Add the page name
+                            pdf.setFontSize(12);
+                            pdf.text(page.name, 20, yPos);
+                            yPos += 5;
+                            
+                            // Add the path with bullet point
+                            pdf.setFontSize(10);
+                            pdf.text('• ' + page.path, 25, yPos);
+                            yPos += 5;
+                            
+                            // Add the URL with smaller font
+                            pdf.setFontSize(8);
+                            pdf.text('  URL: ' + page.url, 25, yPos);
+                            
+                            yPos += 10;
+                        });
+                        
+                        // Draw a divider line after each section (except the last one)
+                        if (Object.keys(sections)[Object.keys(sections).length - 1] !== section) {
+                            pdf.setLineWidth(0.3);
+                            pdf.line(15, yPos - 3, 195, yPos - 3);
+                        }
+                    }
+                    
+                    // Save the PDF
+                    pdf.save('anglia-societies-selected-pages.pdf');
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    alert('There was an error generating the PDF. Please check your browser console for details.');
+                }
+            });
+            
+            // Initialize the selected count
+            updateSelectedCount();
         });
     </script>
 </body>
